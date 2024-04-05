@@ -3,6 +3,7 @@
 #include <cctype>
 #include "drink.h"
 
+
 // lecture activity comment lines 25 - 30, 32, 46, 50, 59, 61, 74 - 80
 void resetStream();
 sizeType inputDrinkSize();
@@ -21,14 +22,14 @@ int inputInt(std::string prompt, bool (*func)(int, int, int), int lower = 0, int
 int main()
 {
     int x = 79;
-    int *p = nullptr;
-    p = &x;
-    std::cout << &x << std::endl;
-    std::cout << *p << std::endl;
-    p = newArray();
-    delete[] p;
+    int *p = nullptr; //Declares pointer p as an int type and it initializes nullptr, so it does not currently point to any valid memory address
+    p = &x; //Assigns the integer variable x to the pointer p
+    std::cout << &x << std::endl; //outputs the memory addres of the integer x, prints the address where x is stored
+    std::cout << *p << std::endl; //dereferences the pointer p and outputs the value
+    p = newArray(); //calls the function newArray() which dynamically allocates memory for integers and returns a pointer
+    delete[] p; //deallocates p
 
-    drink **drinks;
+    drink **drinks; //calls a pointer drinks to drink
 
     sizeType drinkSize;
     baseType drinkBase;
@@ -42,11 +43,11 @@ int main()
     drinkTemp = inputDrinkTemperature();
     flavor = inputDrinkFlavor();
     dairy = inputDrinkDairy();
-    myDrink = new drink(drinkBase, drinkTemp, drinkSize, dairy, flavor);
+    myDrink = new drink(drinkBase, drinkTemp, drinkSize, dairy, flavor); //creates a new object drink, and initalizes it with the user input, and assigns its address to a pointer myDrink
 
     // int numDrinks = inputInt("How many drinks do you want? ", numGT0);
     int numDrinks = 1;
-    drinks = new drink *[numDrinks];
+    drinks = new drink *[numDrinks]; //allocates memory to an array of pointers to the object drink
 
     while (yN == 'Y')
     {
@@ -55,9 +56,9 @@ int main()
         drinkTemp = inputDrinkTemperature();
         flavor = inputDrinkFlavor();
         dairy = inputDrinkDairy();
-        drinks[numDrinks - 1] = new drink(drinkBase, drinkTemp, drinkSize, dairy, flavor);
+        drinks[numDrinks - 1] = new drink(drinkBase, drinkTemp, drinkSize, dairy, flavor); //allocates memory for drink and initalizes it with user input, and stores it's address in drink[numDrinks-1]
         // drink d(bases[drinkBase - 1], temps[drinkTemp - 1], sizes[drinkSize - 1], dairy, flavor);
-        std::cout << drinks[numDrinks - 1]->tostring() << std::endl;
+        std::cout << drinks[numDrinks - 1]->tostring() << std::endl; //prints the string of the object drink
         std::cout << "Would you like another drink? ";
         std::cin >> yN;
         yN = toupper(yN);
@@ -70,13 +71,13 @@ int main()
         }
         if (yN == 'Y')
         {
-            drink **d = drinks;
-            drinks = new drink *[++numDrinks];
-            for (int i = 0; i < numDrinks - 1; i++)
+            drink **d = drinks; //creates a new pointer d and assigns it the value of the pointer drinks
+            drinks = new drink *[++numDrinks]; //allocates memory for any array of pointer to the object drink with the size increased by 1, and assigsn its address to drinks
+            for (int i = 0; i < numDrinks - 1; i++) //This loop goes over the elements of the original drinks array
             {
-                drinks[i] = d[i];
+                drinks[i] = d[i];//copies each pointer from the array d to the array drinks
             }
-            delete[] d;
+            delete[] d; //deallocates memory pointed to the pointer d
         }
     }
 
